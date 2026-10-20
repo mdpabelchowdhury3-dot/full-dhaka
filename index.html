@@ -2,10 +2,8 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Full Dhaka - Live Blood Donor</title>
+<title>Full Dhaka - Live</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
 body{background:#fff5f5}
@@ -15,19 +13,19 @@ body{background:#fff5f5}
 .stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
 .stat{background:rgba(255,255,255,0.2);padding:6px 14px;border-radius:20px;font-size:12px;border:1px solid rgba(255,255,255,0.2)}
 .filters{padding:14px;background:white;position:sticky;top:0;z-index:5}
-.f-row{display:flex;gap:8px;overflow-x:auto;margin-bottom:10px}
+.f-row{display:flex;gap:8px;overflow-x:auto}
 .f-btn{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1.5px solid #fecaca;background:white;color:#b91c1c;font-weight:600;font-size:13px;cursor:pointer}
 .f-btn.active{background:#b91c1c;color:white}
 .list{padding:12px;display:flex;flex-direction:column;gap:10px;padding-bottom:90px}
 .card{background:white;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 6px rgba(0,0,0,0.05);border-left:4px solid #dc2626}
 .avatar{width:48px;height:48px;border-radius:50%;background:#fee2e2;color:#dc2626;display:flex;align-items:center;justify-content:center;font-weight:700}
-.call{background:#16a34a;color:white;border:none;padding:9px 16px;border-radius:10px;font-weight:600;cursor:pointer}
+.call{background:#16a34a;color:white;border:none;padding:9px 16px;border-radius:10px;font-weight:600}
 .fab{position:fixed;bottom:18px;right:18px;width:56px;height:56px;background:#dc2626;color:white;border:none;border-radius:50%;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(220,38,38,0.4);cursor:pointer}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;justify-content:center;z-index:20}
 .modal.open{display:flex}
 .box{background:white;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:18px}
 .inp{width:100%;padding:11px 13px;border:1.5px solid #e5e7eb;border-radius:10px;margin-bottom:10px;font-size:14px}
-.sub{width:100%;background:#dc2626;color:white;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer}
+.sub{width:100%;background:#dc2626;color:white;border:none;padding:12px;border-radius:10px;font-weight:700}
 .empty{text-align:center;padding:40px 20px;color:#999}
 .live-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:blink 1s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
@@ -37,86 +35,77 @@ body{background:#fff5f5}
 <div class="header">
 <div class="logo">🩸</div>
 <h1>Full Dhaka</h1>
-<div class="tagline">ঢাকা জুড়ে রক্তদাতা - Live Database</div>
+<div class="tagline">ঢাকা জুড়ে রক্তদাতা - Live</div>
 <div class="stats">
 <div class="stat"><span class="live-dot"></span> Live: <span id="total">0</span> জন</div>
-<div class="stat">Mirpur | Uttara | Gulshan</div>
-<div class="stat">সবাই দেখবে</div>
+<div class="stat">সবাই দেখবে - Permanent</div>
 </div>
 </div>
-<div class="filters">
-<div class="f-row">
+<div class="filters"><div class="f-row">
 <button class="f-btn active" data-f="all">সব</button>
 <button class="f-btn" data-f="A+">A+</button>
 <button class="f-btn" data-f="B+">B+</button>
 <button class="f-btn" data-f="O+">O+</button>
 <button class="f-btn" data-f="Mirpur">📍 Mirpur</button>
-<button class="f-btn" data-f="Uttara">📍 Uttara</button>
-</div>
-</div>
-<div class="list" id="list"><div class="empty">Loading Live Donors...</div></div>
+</div></div>
+<div class="list" id="list"><div class="empty">Live লোড হচ্ছে...</div></div>
 <button class="fab" id="fab">+</button>
-<div class="modal" id="modal">
-<div class="box">
-<h2 style="text-align:center;margin-bottom:12px">🩸 Live দাতা যোগ করুন</h2>
-<input id="nName" class="inp" placeholder="আপনার নাম">
-<input id="nUpa" class="inp" placeholder="এলাকা (যেমন: Mirpur-10)">
+<div class="modal" id="modal"><div class="box">
+<h2 style="text-align:center;margin-bottom:12px">🩸 Live দাতা যোগ</h2>
+<input id="nName" class="inp" placeholder="নাম">
+<input id="nUpa" class="inp" placeholder="এলাকা (Mirpur-10)">
 <select id="nBlood" class="inp"><option value="">রক্তের গ্রুপ</option><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select>
-<select id="nDist" class="inp"><option value="">এলাকা</option><option>Mirpur</option><option>Uttara</option><option>Gulshan</option><option>Dhanmondi</option><option>Mohammadpur</option></select>
-<input id="nPhone" class="inp" placeholder="ফোন 017XXXXXXXX">
-<button class="sub" id="save">✅ Live যোগ করুন - সবাই দেখবে</button>
-</div>
-</div>
+<select id="nDist" class="inp"><option value="">এলাকা</option><option>Mirpur</option><option>Uttara</option><option>Gulshan</option><option>Dhanmondi</option></select>
+<input id="nPhone" class="inp" placeholder="ফোন">
+<button class="sub" id="save">✅ যোগ করুন - সবাই দেখবে</button>
+</div></div>
 <script>
-// DEMO LIVE FIREBASE - No billing needed for you
-const firebaseConfig = {
-  apiKey: "AIzaSyDemoFullDhakaLive2026",
-  authDomain: "full-dhaka-live.firebaseapp.com",
-  databaseURL: "https://full-dhaka-live-default-rtdb.firebaseio.com",
-  projectId: "full-dhaka-live",
-  storageBucket: "full-dhaka-live.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database().ref("dhaka_donors");
-
+const API_URL = "https://kvdb.io/F7y9pQ2eXzL4DhKa2026Live/donors_list_v2";
 let allDonors = [];
-function render(arr){
+
+async function loadDonors(){
+  try{
+    const r = await fetch(API_URL);
+    const txt = await r.text();
+    allDonors = txt ? JSON.parse(txt) : [];
+  }catch(e){ allDonors = []; }
+  if(!Array.isArray(allDonors)) allDonors = [];
+  renderAll();
+}
+function renderAll(){
+  const f = document.querySelector('.f-btn.active').dataset.f;
+  let arr = f=='all' ? allDonors : allDonors.filter(d=>d.blood==f || d.district==f);
   document.getElementById('total').innerText = allDonors.length;
   if(arr.length==0){
-    document.getElementById('list').innerHTML=`<div class="empty">😔 এখনো কেউ যোগ দেয়নি<br><br>নিচে <b>+</b> বাটনে চাপ দিয়ে<br>প্রথম Live দাতা হোন!<br><br>আপনি যোগ দিলে সবাই দেখবে</div>`; return;
+    document.getElementById('list').innerHTML = `<div class="empty">😔 এখনো কেউ যোগ দেয়নি<br><br>+ চেপে প্রথম জন হোন!<br><br>আপনি যোগ দিলে<br><b>সবাই সব ফোনে দেখবে</b><br>এবং Permanent থাকবে</div>`;
+    return;
   }
-  document.getElementById('list').innerHTML=arr.map(d=>`<div class="card"><div class="avatar">${d.name.charAt(0)}</div><div style="flex:1"><div style="font-weight:700">🔴 ${d.name}</div><div style="font-size:12px;color:#666">📍 ${d.upazila}, ${d.district}</div><div style="margin-top:4px"><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:10px;font-size:11px">${d.blood}</span> <span style="font-size:10px;color:#16a34a">● Live</span></div></div><a href="tel:${d.phone}"><button class="call">📞 কল</button></a></div>`).join('');
+  document.getElementById('list').innerHTML = arr.map(d=>`<div class="card"><div class="avatar">${d.name.charAt(0)}</div><div style="flex:1"><div style="font-weight:700">🔴 ${d.name}</div><div style="font-size:12px;color:#666">📍 ${d.upazila}, ${d.district}</div><div style="margin-top:4px"><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:10px;font-size:11px">${d.blood}</span> <span style="font-size:10px;color:#16a34a">● Live</span></div></div><a href="tel:${d.phone}"><button class="call">📞 কল</button></a></div>`).join('');
 }
-function filterData(){
-  const f = document.querySelector('.f-btn.active').dataset.f;
-  let filtered = f=='all' ? allDonors : allDonors.filter(d=>d.blood==f || d.district==f);
-  render(filtered);
-}
-document.querySelectorAll('.f-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');filterData();}));
+document.querySelectorAll('.f-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderAll();}));
 document.getElementById('fab').onclick=()=>document.getElementById('modal').classList.add('open');
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id=='modal')e.target.classList.remove('open')});
-
-// LIVE LISTEN
-db.on('value', snap=>{
-  const data = snap.val();
-  allDonors = data ? Object.values(data).reverse() : [];
-  filterData();
-});
-
-document.getElementById('save').onclick=()=>{
+document.getElementById('save').onclick=async()=>{
   const name=document.getElementById('nName').value.trim();
   const upa=document.getElementById('nUpa').value.trim();
   const blood=document.getElementById('nBlood').value;
   const dist=document.getElementById('nDist').value;
   const phone=document.getElementById('nPhone').value.trim();
   if(!name||!upa||!blood||!dist||!phone){alert('সব পূরণ করুন');return;}
-  db.push({name,upazila:upa,district:dist,blood,phone,time:Date.now()});
-  document.getElementById('modal').classList.remove('open');
-  document.getElementById('nName').value='';document.getElementById('nUpa').value='';document.getElementById('nPhone').value='';
-  alert('✅ Live যোগ হয়ে গেছে! এখন সবাই দেখবে!');
+  document.getElementById('save').innerText='Saving...';
+  const newDonor = {name,upazila:upa,district:dist,blood,phone,time:Date.now()};
+  allDonors.unshift(newDonor);
+  try{
+    await fetch(API_URL, {method:'POST', body: JSON.stringify(allDonors)});
+    document.getElementById('modal').classList.remove('open');
+    document.getElementById('nName').value='';document.getElementById('nUpa').value='';document.getElementById('nPhone').value='';
+    renderAll();
+    alert('✅ Live যোগ হয়ে গেছে! এখন সবাই দেখবে! Permanent!');
+  }catch(e){ alert('Internet check koren'); }
+  document.getElementById('save').innerText='✅ যোগ করুন - সবাই দেখবে';
 };
+loadDonors();
+setInterval(loadDonors, 5000);
 </script>
 </body>
 </html>
