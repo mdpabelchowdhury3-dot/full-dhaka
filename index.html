@@ -1,2 +1,99 @@
-
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Full Dhaka</title><style>body{margin:0;font-family:system-ui;background:#f8f9fa}header{background:linear-gradient(135deg,#006a4e,#f42a41);color:#fff;padding:60px 20px;text-align:center}header h1{font-size:42px;margin:0}.container{max-width:900px;margin:auto;padding:20px}.card{background:#fff;padding:20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.1);margin:15px 0;text-align:center}h2{color:#006a4e}</style></head><body><header><h1>Full Dhaka</h1><p>ঢাকা - আমাদের গর্ব, আমাদের ভালোবাসা</p></header><div class="container"><div class="card"><h2>Alhamdulillah! Site Live!</h2><p>400 bochorer itihasher shohor Dhaka te apnake swagotom.</p></div><div class="card"><h3>Lalbagh Fort</h3><p>Mughal Architecture</p></div><div class="card"><h3>Ahsan Manzil</h3><p>The Pink Palace</p></div></div></body></html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Dhaka - Blood Donor</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{background:#fff5f5}
+.header{background:linear-gradient(135deg,#991b1b,#dc2626);color:white;padding:28px 16px;text-align:center;border-radius:0 0 24px 24px}
+.logo{width:70px;height:70px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:34px}
+.tagline{background:rgba(0,0,0,0.25);display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;margin-top:10px}
+.stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.stat{background:rgba(255,255,255,0.2);padding:6px 14px;border-radius:20px;font-size:12px;border:1px solid rgba(255,255,255,0.2)}
+.filters{padding:14px;background:white;position:sticky;top:0;z-index:5}
+.f-row{display:flex;gap:8px;overflow-x:auto;margin-bottom:10px}
+.f-btn{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1.5px solid #fecaca;background:white;color:#b91c1c;font-weight:600;font-size:13px;cursor:pointer}
+.f-btn.active{background:#b91c1c;color:white}
+.list{padding:12px;display:flex;flex-direction:column;gap:10px;padding-bottom:90px}
+.card{background:white;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 6px rgba(0,0,0,0.05);border-left:4px solid #dc2626}
+.avatar{width:48px;height:48px;border-radius:50%;background:#fee2e2;color:#dc2626;display:flex;align-items:center;justify-content:center;font-weight:700}
+.call{background:#16a34a;color:white;border:none;padding:9px 16px;border-radius:10px;font-weight:600;cursor:pointer}
+.fab{position:fixed;bottom:18px;right:18px;width:56px;height:56px;background:#dc2626;color:white;border:none;border-radius:50%;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(220,38,38,0.4);cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;justify-content:center;z-index:20}
+.modal.open{display:flex}
+.box{background:white;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:18px}
+.inp{width:100%;padding:11px 13px;border:1.5px solid #e5e7eb;border-radius:10px;margin-bottom:10px;font-size:14px}
+.row{display:flex;gap:8px}.row .inp{flex:1}
+.sub{width:100%;background:#dc2626;color:white;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="logo">🩸</div>
+<h1>Full Dhaka</h1>
+<div class="tagline">ঢাকা জুড়ে রক্তদাতা - রক্ত দিন জীবন বাঁচান</div>
+<div class="stats">
+<div class="stat">মোট: <span id="total">0</span> জন</div>
+<div class="stat">Mirpur | Uttara | Gulshan | Dhanmondi</div>
+<div class="stat">Live</div>
+</div>
+</div>
+<div class="filters">
+<div class="f-row">
+<button class="f-btn active" data-f="all">সব</button>
+<button class="f-btn" data-f="A+">A+</button>
+<button class="f-btn" data-f="B+">B+</button>
+<button class="f-btn" data-f="O+">O+</button>
+<button class="f-btn" data-f="AB+">AB+</button>
+<button class="f-btn" data-f="Mirpur">📍 Mirpur</button>
+<button class="f-btn" data-f="Uttara">📍 Uttara</button>
+</div>
+</div>
+<div class="list" id="list"></div>
+<button class="fab" id="fab">+</button>
+<div class="modal" id="modal">
+<div class="box">
+<h2 style="text-align:center;margin-bottom:12px">🩸 নতুন দাতা যোগ করুন</h2>
+<input id="nName" class="inp" placeholder="আপনার নাম">
+<input id="nUpa" class="inp" placeholder="এলাকা (যেমন: Mirpur-10)">
+<select id="nBlood" class="inp"><option value="">রক্তের গ্রুপ</option><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select>
+<select id="nDist" class="inp"><option value="">এলাকা</option><option value="Mirpur">Mirpur</option><option value="Uttara">Uttara</option><option value="Gulshan">Gulshan</option><option value="Dhanmondi">Dhanmondi</option><option value="Mohammadpur">Mohammadpur</option></select>
+<input id="nPhone" class="inp" placeholder="ফোন 017XXXXXXXX">
+<button class="sub" id="save">✅ যোগ করুন</button>
+</div>
+</div>
+<script>
+const base=[{name:"Pabel Chowdhury",upazila:"Mirpur-10",district:"Mirpur",blood:"B+",phone:"01700000001"},{name:"Rahim Ahmed",upazila:"Uttara Sector 7",district:"Uttara",blood:"O+",phone:"01700000002"},{name:"Karim Uddin",upazila:"Gulshan-1",district:"Gulshan",blood:"A+",phone:"01700000003"}];
+let donors=JSON.parse(localStorage.getItem('donors_dhaka')||'null')||base;
+function render(arr){
+document.getElementById('total').innerText=donors.length;
+document.getElementById('list').innerHTML=arr.map(d=>`<div class="card"><div class="avatar">${d.name.charAt(0)}</div><div style="flex:1"><div style="font-weight:700">🔴 ${d.name}</div><div style="font-size:12px;color:#666">📍 ${d.upazila}, ${d.district}</div><div style="margin-top:4px"><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:10px;font-size:11px">${d.blood}</span></div></div><a href="tel:${d.phone}"><button class="call">📞 কল</button></a></div>`).join('');
+}
+function filter(){
+const df=document.querySelector('.f-btn.active').dataset.f;
+let f=donors.filter(d=>df=='all'||d.blood==df||d.district==df);
+render(f);
+}
+document.querySelectorAll('.f-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter();}));
+document.getElementById('fab').onclick=()=>document.getElementById('modal').classList.add('open');
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id=='modal')e.target.classList.remove('open')});
+document.getElementById('save').onclick=()=>{
+const name=document.getElementById('nName').value.trim();
+const upa=document.getElementById('nUpa').value.trim();
+const blood=document.getElementById('nBlood').value;
+const dist=document.getElementById('nDist').value;
+const phone=document.getElementById('nPhone').value.trim();
+if(!name||!upa||!blood||!dist||!phone){alert('সব পূরণ করুন');return;}
+donors.unshift({name,upazila:upa,district:dist,blood,phone});
+localStorage.setItem('donors_dhaka',JSON.stringify(donors));
+document.getElementById('modal').classList.remove('open');
+filter();
+alert('✅ যোগ হয়ে গেছে!');
+};
+render(donors);
+</script>
+</body>
+</html>
